@@ -7,16 +7,15 @@ typedef struct {
 	uint32_t x, y;
 	int angle;
 } SHIP;
-SHIP ship;
-
+SHIP    ship;
 SVECTOR ship_base_triangle[] = {
 	{   0,-50, 0},
 	{  10, 10, 0},
 	{ -10, 10, 0}
 };
 SVECTOR ship_triangle[3];
-int ship_cos;
-int ship_sin;
+int     ship_cos;
+int     ship_sin;
 
 void ship_init() {
 	ship.angle = 0;

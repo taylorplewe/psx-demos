@@ -1,7 +1,8 @@
 #include "controller.h"
 
-u_char padbuff[2][34];
+u_char  padbuff[2][34];
 PADTYPE padinfo;
+
 void controller_init() {
 	InitPAD(padbuff[0], 34, padbuff[1], 34);
 	padbuff[0][0] = padbuff[0][1] = 0xff;
