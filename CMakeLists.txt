@@ -8,7 +8,7 @@ project(
 	HOMEPAGE_URL "https://github.com/taylorplewe"
 )
 
-file(GLOB _sources *.c)
+file(GLOB _sources src/*.c)
 psn00bsdk_add_executable(just_the_ship GPREL ${_sources})
 
 install(FILES ${PROJECT_BINARY_DIR}/just_the_ship.exe TYPE BIN)
