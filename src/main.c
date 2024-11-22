@@ -8,32 +8,21 @@
 // graphics
 DISPENV disp[2];
 DRAWENV draw[2];
-int frameenv_ind;
-u_long ot[2][OT_LEN];
-char primbuff[2][32768];
-char* nextprim;
+int     frameenv_ind;
+u_long  ot[2][OT_LEN];
+char    primbuff[2][32768];
+char*   nextprim;
+void    graphics_init();
 
-void init_graphics() {
-	ResetGraph(0);
-
-	SetDefDispEnv(&disp[0], 0, 0, SCREEN_W, SCREEN_H);
-	SetDefDispEnv(&disp[1], 0, SCREEN_H, SCREEN_W, SCREEN_H);
-	SetDefDrawEnv(&draw[0], 0, SCREEN_H, SCREEN_W, SCREEN_H);
-	SetDefDrawEnv(&draw[1], 0, 0, SCREEN_W, SCREEN_H);
-	frameenv_ind = 0;
-	nextprim = primbuff[0];
-
-	setRGB0(&draw[0], 0, 0, 255);
-	setRGB0(&draw[1], 0, 0, 255);
-	draw[0].isbg = 1;
-	draw[1].isbg = 1;
-
-	SetDispMask(1);
-}
 void init() {
-	init_graphics();
+	graphics_init();
 	controller_init();
 	ship_init();
+}
+
+void update() {
+	controller_update();
+	ship_update();
 }
 
 void display() {
@@ -53,11 +42,6 @@ void display() {
 	frameenv_ind = !frameenv_ind;
 }
 
-void update() {
-	controller_update();
-	ship_update();
-}
-
 int main() {
 	init();
 
@@ -67,4 +51,22 @@ int main() {
 	}
 
 	return 0;
+}
+
+void graphics_init() {
+	ResetGraph(0);
+
+	SetDefDispEnv(&disp[0], 0, 0,        SCREEN_W, SCREEN_H);
+	SetDefDispEnv(&disp[1], 0, SCREEN_H, SCREEN_W, SCREEN_H);
+	SetDefDrawEnv(&draw[0], 0, SCREEN_H, SCREEN_W, SCREEN_H);
+	SetDefDrawEnv(&draw[1], 0, 0,        SCREEN_W, SCREEN_H);
+	frameenv_ind = 0;
+	nextprim = primbuff[0];
+
+	setRGB0(&draw[0], 0, 0, 255);
+	setRGB0(&draw[1], 0, 0, 255);
+	draw[0].isbg = 1;
+	draw[1].isbg = 1;
+
+	SetDispMask(1);
 }
