@@ -5,7 +5,7 @@
 
 typedef struct {
 	uint32_t x, y;
-	int angle;
+	int      angle;
 } SHIP;
 SHIP    ship;
 SVECTOR ship_base_triangle[] = {
