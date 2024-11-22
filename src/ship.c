@@ -23,7 +23,7 @@ void ship_init() {
 	ship.y = (SCREEN_H >> 1)<<12;
 }
 
-void ship_turn() {
+void _ship_turn() {
 	if (!(padinfo.btn & PAD_RIGHT)) {
 		ship.angle += SHIP_TURN_SPEED;
 	} else if (!(padinfo.btn & PAD_LEFT)) {
@@ -32,7 +32,7 @@ void ship_turn() {
 	ship_sin = isin(ship.angle);
 	ship_cos = icos(ship.angle);
 }
-void ship_move() {
+void _ship_move() {
 	if (!(padinfo.btn & PAD_UP)) {
 		ship.x += ship_sin;
 		ship.y -= ship_cos;
@@ -42,8 +42,8 @@ void ship_move() {
 	}
 }
 void ship_update() {
-	ship_turn();
-	ship_move();
+	_ship_turn();
+	_ship_move();
 }
 
 void _ship_calc_triangle() {
