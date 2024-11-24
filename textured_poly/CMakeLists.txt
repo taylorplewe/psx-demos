@@ -10,6 +10,7 @@ project(
 
 file(GLOB _sources src/*.c)
 psn00bsdk_add_executable(textured_poly GPREL ${_sources})
+psn00bsdk_target_incbin(textured_poly PRIVATE cooldog_tim cooldog.tim)
 
 install(FILES ${PROJECT_BINARY_DIR}/textured_poly.exe TYPE BIN)
 

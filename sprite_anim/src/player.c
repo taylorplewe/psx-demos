@@ -27,7 +27,7 @@ ANIM anim_idle = {
 };
 ANIM anim_walk = {
 	.num_frames = 6,
-	.frame_time = 10,
+	.frame_time = 5,
 	.frame_locs = {
 		{32*1, 0},
 		{32*2, 0},
@@ -44,7 +44,7 @@ extern const uint32_t iron_knight_tim[];
 
 void plr_init() {
 	load_texture(iron_knight_tim, &plr_tim);
-	plr.x = (SCREEN_W>>1)<<12;
+	plr.x = (SCREEN_W>>2)<<12;
 	plr.y = (SCREEN_H>>1)<<12;
 	plr.frame_num = plr.frame_counter = 0;
 }
@@ -90,7 +90,7 @@ void plr_draw(u_long* ot, char* nextprim) {
 	addPrim(ot, plr_sprt);
 	nextprim += sizeof(SPRT);
 
-	// sort exture page
+	// sort texture page
 	DR_TPAGE* tpage = (DR_TPAGE*)nextprim;
 	setDrawTPage(tpage, 0, 1, getTPage(plr_tim.mode&0x3, 0, plr_tim.prect->x, plr_tim.prect->y));
 	addPrim(ot, tpage);

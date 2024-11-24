@@ -3,7 +3,7 @@
 #include <psxgte.h>
 #include "constants.h"
 #include "controller.h"
-#include "ship.h"
+#include "cooldog.h"
 
 // graphics
 DISPENV disp[2];
@@ -17,12 +17,12 @@ void    graphics_init();
 void init() {
 	graphics_init();
 	controller_init();
-	ship_init();
+	cooldog_init();
 }
 
 void update() {
 	controller_update();
-	ship_update();
+	cooldog_update();
 }
 
 void display() {
@@ -35,7 +35,7 @@ void display() {
 
 	// draw all primitives
 	ClearOTagR(ot[frameenv_ind], OT_LEN);
-	ship_draw(ot[frameenv_ind], nextprim);
+	cooldog_draw(ot[frameenv_ind], nextprim);
 	DrawOTag(ot[frameenv_ind]+(OT_LEN-1));
 
 	// swap frame buffers
