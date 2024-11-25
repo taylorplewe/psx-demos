@@ -1,0 +1,1 @@
+This is a series of demos I'm making to learn the ins and outs of game development for the PlayStation 1 (PSX). They all make use of [PSn00bSDK](https://github.com/Lameguy64/PSn00bSDK), which is an open-source SDK that tries to be a 1:1 mirror of Sony's official psyQ SDK.
