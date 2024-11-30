@@ -1,5 +1,7 @@
+#include <stdio.h>
 #include "ship.h"
 #include "constants.h"
+#include "comm.h"
 
 #define SHIP_TURN_SPEED 20
 
@@ -24,6 +26,7 @@ void ship_init() {
 }
 
 void _ship_turn() {
+	if (padinfo.type == 0x7) return;
 	if (!(padinfo.btn & PAD_RIGHT)) {
 		ship.angle += SHIP_TURN_SPEED;
 	} else if (!(padinfo.btn & PAD_LEFT)) {
@@ -31,8 +34,28 @@ void _ship_turn() {
 	}
 	ship_sin = isin(ship.angle);
 	ship_cos = icos(ship.angle);
+
+	printf("ship.angle: %i\n", ship.angle);
+}
+void _ship_turn_joystick() {
+	if (padinfo.type != 0x7) return;
+	// check if left stick is out of deadzone
+	if (padinfo.rs_x < 128-JOYSTICK_DEADZONE
+		|| padinfo.rs_x > 128+JOYSTICK_DEADZONE
+		|| padinfo.rs_y < 128-JOYSTICK_DEADZONE
+		|| padinfo.rs_y > 128+JOYSTICK_DEADZONE
+	) {
+		// calculate new sin & cos based off angle from atan2(rs_y-128, rs_x-128)
+		int8_t srs_x = (int8_t)padinfo.rs_x - 128;
+		int8_t srs_y = (int8_t)padinfo.rs_y - 128;
+		long new_angle = (fastAtan2(srs_y, srs_x) + 1024) % ONE;
+
+		ship_sin = isin(new_angle);
+		ship_cos = icos(new_angle);
+	}
 }
 void _ship_move() {
+	if (padinfo.type == 0x7) return;
 	if (!(padinfo.btn & PAD_UP)) {
 		ship.x += ship_sin;
 		ship.y -= ship_cos;
@@ -41,9 +64,23 @@ void _ship_move() {
 		ship.y += ship_cos;
 	}
 }
+void _ship_move_joystick() {
+	if (padinfo.type != 0x7) return;
+	// check if left stick is out of deadzone
+	if (padinfo.ls_x < 128-JOYSTICK_DEADZONE || padinfo.ls_x > 128+JOYSTICK_DEADZONE) {
+		int8_t sls_x = (int8_t)padinfo.ls_x - 128;
+		ship.x += sls_x<<5;
+	}
+	if (padinfo.ls_y < 128-JOYSTICK_DEADZONE || padinfo.ls_y > 128+JOYSTICK_DEADZONE) {
+		int8_t sls_y = (int8_t)padinfo.ls_y - 128;
+		ship.y += sls_y<<5;
+	}
+}
 void ship_update() {
 	_ship_turn();
+	_ship_turn_joystick();
 	_ship_move();
+	_ship_move_joystick();
 }
 
 void _ship_calc_triangle() {

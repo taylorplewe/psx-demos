@@ -174,7 +174,7 @@ int main() {
 
 	while (1) {
 		getInput();
-		FntPrint(0, "Hello California");
+		FntPrint(0, "Hello California\n");
 		FntFlush(-1);
 
 		ClearOTagR(ot[db], OTLEN);
@@ -227,18 +227,28 @@ void ship_init() {
 	ship_angle = 0;
 }
 void ship_control() {
-	if (!(padinfo.btn & PAD_UP)) {
-		ship_velox += (isin(ship_angle))/128;
-		ship_veloy -= (icos(ship_angle))/128;
-	} else if (!(padinfo.btn & PAD_DOWN)) {
-		ship_velox -= (isin(ship_angle))/64;
-		ship_veloy += (icos(ship_angle))/64;
+	#define JOYSTICK_DEADZONE 20
+
+	// check if left stick out of deadzone
+	if (padinfo.ls_x < 128-JOYSTICK_DEADZONE || padinfo.ls_x > 128+JOYSTICK_DEADZONE || padinfo.ls_y < 128-JOYSTICK_DEADZONE || padinfo.ls_y > 128 + JOYSTICK_DEADZONE) {
+		int x = (int)padinfo.ls_x - 128;
+		int y = (int)padinfo.ls_y - 128;
 	}
-	if (!(padinfo.btn & PAD_LEFT)) {
-		ship_angle -= SHIP_TURN_SPEED;
-	} else if (!(padinfo.btn & PAD_RIGHT)) {
-		ship_angle += SHIP_TURN_SPEED;
-	}
+
+
+
+	// if (!(padinfo.btn & PAD_UP)) {
+	// 	ship_velox += (isin(ship_angle))/128;
+	// 	ship_veloy -= (icos(ship_angle))/128;
+	// } else if (!(padinfo.btn & PAD_DOWN)) {
+	// 	ship_velox -= (isin(ship_angle))/64;
+	// 	ship_veloy += (icos(ship_angle))/64;
+	// }
+	// if (!(padinfo.btn & PAD_LEFT)) {
+	// 	ship_angle -= SHIP_TURN_SPEED;
+	// } else if (!(padinfo.btn & PAD_RIGHT)) {
+	// 	ship_angle += SHIP_TURN_SPEED;
+	// }
 }
 void ship_move() {
 	ship_x += ship_velox;
