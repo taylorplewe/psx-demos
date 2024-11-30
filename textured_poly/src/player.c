@@ -86,10 +86,10 @@ uint32_t player_draw(u_long* ot, char* nextprim) {
 	POLY_FT4* player_poly = (POLY_FT4*)nextprim;
 	setPolyFT4(player_poly);
 	setXY4(player_poly,
-		(plr.x>>12),             (plr.y>>12),
-		(plr.x>>12) + PLR_WIDTH, (plr.y>>12),
-		(plr.x>>12),             (plr.y>>12) + PLR_HEIGHT,
-		(plr.x>>12) + PLR_WIDTH, (plr.y>>12) + PLR_HEIGHT
+		x,             y,
+		x + PLR_WIDTH, y,
+		x,             y + PLR_HEIGHT,
+		x + PLR_WIDTH, y + PLR_HEIGHT
 	);
 	uint16_t u = plr.anim->frame_locs[plr.frame_num].vx;
 	if (plr.facing != 1) u += PLR_WIDTH;
@@ -98,5 +98,21 @@ uint32_t player_draw(u_long* ot, char* nextprim) {
 	setRGB0(player_poly, 128, 128, 128);
 	player_poly->tpage = getTPage(plr_tim_info.mode&0x3, 0, plr_tim_info.prect->x, plr_tim_info.prect->y);
 	addPrim(ot, player_poly);
-	return sizeof(POLY_FT4);
+	
+	// sort player's shadow
+	player_poly++;
+	setPolyFT4(player_poly);
+	setXY4(player_poly,
+		x-PLR_WIDTH,             y + PLR_HEIGHT*2,
+		x + PLR_WIDTH*2, y + PLR_HEIGHT*2,
+		x,             y + PLR_HEIGHT,
+		x + PLR_WIDTH, y + PLR_HEIGHT
+	);
+	if (plr.facing != 1) u += PLR_WIDTH;
+	setUVWH(player_poly, u, plr.anim->frame_locs[plr.frame_num].vy, PLR_WIDTH * plr.facing, PLR_HEIGHT);
+	setClut(player_poly, plr_tim_info.crect->x, plr_tim_info.crect->y);
+	setRGB0(player_poly, 0, 0, 0);
+	player_poly->tpage = getTPage(plr_tim_info.mode&0x3, 0, plr_tim_info.prect->x, plr_tim_info.prect->y);
+	addPrim(ot, player_poly);
+	return sizeof(POLY_FT4)*2;
 }

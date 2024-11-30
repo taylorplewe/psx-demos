@@ -26,5 +26,5 @@ if ($exeSearch.Count -gt 0) {
 
 $pcsxReduxPath = 'C:\Users\tplew\Documents\Other\ps1\pcsx-redux-nightly-20568.20241112.3-x64-cli\pcsx-redux.exe'
 $duckstationPath = 'C:\Users\tplew\Documents\Other\ps1\duckstation-windows-x64-release\duckstation-qt-x64-ReleaseLTCG.exe'
-& $duckstationPath $path/build/$exeName
-# & $pcsxReduxPath -exe $path/build/$exeName -run
+# & $duckstationPath $path/build/$exeName
+& $pcsxReduxPath -exe $path/build/$exeName -run
