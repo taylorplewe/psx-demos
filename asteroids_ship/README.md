@@ -2,7 +2,7 @@
 
 Just the [Fixed point Math](http://lameguy64.net/tutorials/pstutorials/chapter1/5-fixedpoint.html) section of lameguy64's tutorial, an Asteroids-like ship.
 
-___Switch conttroller to Analog mode to control the ship's 360&deg; movement with the left stick and 360&deg; direction with the right stick.___
+___Switch controller to Analog mode to control the ship's 360&deg; movement with the left stick and 360&deg; direction with the right stick.___
 
 This demo taught me about:
 - Drawing 3-sided polygons
