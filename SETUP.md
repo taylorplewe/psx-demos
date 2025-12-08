@@ -9,8 +9,8 @@ For ease of use, I created a PowerShell function that ensures all of this automa
 ```powershell
 function psxdev {
 	devps # enters a VS 2022 dev environment
-	$env:PATH = "$($env:PATH);C:\Users\tplew\Documents\ps1\PSn00bSDK-0.24-win32\bin"
-	$env:PSN00BSDK_LIBS = "C:\Users\tplew\Documents\ps1\PSn00bSDK-0.24-win32\lib\libpsn00b"
+	$env:PATH = "$($env:PATH);C:\Users\me\ps1\PSn00bSDK-0.24-win32\bin"
+	$env:PSN00BSDK_LIBS = "C:\Users\me\ps1\PSn00bSDK-0.24-win32\lib\libpsn00b"
 }
 ```
 
